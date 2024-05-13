@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Gestor de alumnos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Gestor de alumnos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!--
+  <ion-radio-group value="strawberries">
+    <ion-radio value="003">Sección 003</ion-radio><br />
+    <ion-radio value="009">Sección 009</ion-radio><br />
+  </ion-radio-group>
+-->
+<ion-list>
+  <ion-item>
+    <ion-select label="Sección" placeholder="Seleccionar" [(ngModel)]="seccion" (ionChange)="getSelected(seccion)">
+      <ion-select-option value="alumnos003">PGY4121-003</ion-select-option>
+      <ion-select-option value="alumnos009">PGY4121-009</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+  <br>
+  <ion-grid>
+    <ion-row>
+    <ion-col><ion-button (click)="getAlumnos(seccion)">Cargar Datos</ion-button></ion-col>
+    <ion-col><ion-button (click)="getAlumnos(seccion)">Nuevo Alumno</ion-button></ion-col>
+    <ion-col><ion-button (click)="salir()">Salir</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <br>
+    <ion-grid>
+      <ion-row>
+      <ion-col>RUT</ion-col>
+      <ion-col>Nombre</ion-col>
+      <ion-col>Acciones</ion-col>
+    </ion-row>
+    <ion-item *ngFor="let alumno of alumnos">
+      <ion-col value="id">{{alumno['id']}}</ion-col>
+      <ion-col value="nombre">{{alumno['nombre']}}</ion-col>
+      <ion-col>
+        <ion-button (click)="editAlumno(alumno['id'], seccion)">Editar</ion-button>
+      </ion-col>
+      <!-- {{post['userId']}} {{post['id']}} {{post['title']}} -->
+         
+      <!-- {{post['usuario_user']}} {{post['usuario_nombre']}} {{post['usuario_estado']}} -->
+    </ion-item>
+  </ion-grid>
+</ion-list>
+<ion-list>
+  <ion-item *ngFor="let barcode of barcodes">
+    <ion-label position="stacked">{{ barcode.format }}</ion-label>
+    <ion-input type="text" [value]="barcode.rawValue"></ion-input>
+  </ion-item>
+</ion-list>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="scan()" [disabled]="!isSupported">
+    <ion-icon name="scan"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+</ion-content>
+
